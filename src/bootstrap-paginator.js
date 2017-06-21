@@ -448,11 +448,17 @@
         getPages: function () {
 
             var totalPages = this.totalPages,// get or calculate the total pages via the total records
-                pageStart = (this.currentPage % this.numberOfPages === 0) ? (parseInt(this.currentPage / this.numberOfPages, 10) - 1) * this.numberOfPages + 1 : parseInt(this.currentPage / this.numberOfPages, 10) * this.numberOfPages + 1,//calculates the start page.
+                // pageStart = (this.currentPage % this.numberOfPages === 0) ? (parseInt(this.currentPage / this.numberOfPages, 10) - 1) * this.numberOfPages + 1 : parseInt(this.currentPage / this.numberOfPages, 10) * this.numberOfPages + 1,//calculates the start page.
                 output = [],
                 i = 0,
                 counter = 0;
 
+            // calculates the start page.
+            var pageStart = this.currentPage - parseInt(this.numberOfPages / 2);
+            if(pageStart >= totalPages - this.numberOfPages) {
+                pageStart = totalPages - this.numberOfPages + 1;
+            }
+            
             pageStart = pageStart < 1 ? 1 : pageStart;//check the range of the page start to see if its less than 1.
 
             for (i = pageStart, counter = 0; counter < this.numberOfPages && i <= totalPages; i = i + 1, counter = counter + 1) {//fill the pages
